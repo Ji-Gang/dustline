@@ -18,6 +18,7 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci
+      - run: node node_modules/electron/install.js
       - run: npm test
       - run: npm run build
       - shell: pwsh
