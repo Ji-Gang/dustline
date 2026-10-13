@@ -1,12 +1,12 @@
 {
   "name": "dustline-desktop",
-  "version": "0.12.3",
+  "version": "0.13.0",
   "private": true,
   "description": "DUSTLINE 2v2 multiplayer team deathmatch",
   "main": "desktop/main.cjs",
   "scripts": {
     "start": "electron .",
-    "test": "node desktop/privacy-check.cjs && node check.cjs && node pvp/test.cjs && node pvp/custom-room-test.cjs && node pvp/reconnect-test.cjs && node pvp/netcode-test.cjs && node pvp/bots-feedback-test.cjs && node pvp/signaling-test.cjs && node pvp/relay-test.cjs",
+    "test": "node desktop/privacy-check.cjs && node check.cjs && node pvp/loadout-test.cjs && node pvp/test.cjs && node pvp/custom-room-test.cjs && node pvp/reconnect-test.cjs && node pvp/netcode-test.cjs && node pvp/bots-feedback-test.cjs && node pvp/signaling-test.cjs && node pvp/relay-test.cjs",
     "build": "node desktop/build.cjs"
   },
   "devDependencies": {

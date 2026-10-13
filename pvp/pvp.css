@@ -15,3 +15,7 @@ select,textarea{background:#1d3946;color:#e6f3ff;border:1px solid #69839066;padd
 
 #damageVignette{position:fixed;inset:0;pointer-events:none;z-index:8;opacity:0;background:radial-gradient(ellipse at center,transparent 38%,rgba(185,12,22,.65) 78%,#bd1222 100%)}
 #blueList,#redList{max-height:30vh;overflow-y:auto}#hostSettings{flex-wrap:wrap}
+
+.weapon-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.weapon-grid button small{display:block;font-size:11px;margin-top:4px}.weapon-grid button.active{outline:2px solid #edd493}#equipment{display:block;color:#d8c48b;font-size:12px;margin-bottom:8px}#armory h3{margin:12px 0 6px}#armory p{margin:8px 0}
+
+#sidearms button{background:#284552;color:#c9dde6;text-align:left;margin:0;padding:13px}#sidearms small{color:#96b3c1}@media(max-width:700px){.weapon-grid{grid-template-columns:repeat(2,1fr)}}

@@ -29,7 +29,7 @@
    if(!enabled||!p.alive){this.burst=0;return false;}
    if(now<Math.max(p.reloadUntil||0,this.reloadUntil))return false;
    if(w.burst&&pressed&&now>=this.next)this.burst=w.burst;
-   if(now<this.next||p.ammo-this.pending.length<=0||!(this.burst>0||(w.auto?held||pressed:pressed)))return false;
+   if(now<this.next||(!w.melee&&p.ammo-this.pending.length<=0)||!(this.burst>0||(w.auto?held||pressed:pressed)))return false;
    this.next=now+w.rate;if(this.burst>0&&!--this.burst)this.next+=.22;
    this.pending.push({at:now,spawnId:p.spawnId,weapon:p.weapon});this.shots++;return true;
   }
