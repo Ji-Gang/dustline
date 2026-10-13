@@ -12,3 +12,9 @@ desktop/allow-lan.ps1
 desktop/diagnose-connection.ps1
 desktop/诊断联机.cmd
 *.zip
+
+# Local network captures and exported diagnostics
+*.pcap
+*.pcapng
+connection-report*
+lan-network*
