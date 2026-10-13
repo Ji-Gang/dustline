@@ -14,14 +14,12 @@ if ($PackageDirectory) {
  Copy-Item -LiteralPath (Join-Path $PackageDirectory 'dustline-update.zip') -Destination $stage
 } else {
  if ($Repository -notmatch '^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$') { throw 'Invalid owner/repository.' }
- $release=Invoke-RestMethod -Uri "https://api.github.com/repos/$Repository/releases/latest" -Headers @{'User-Agent'='DUSTLINE-Updater';Accept='application/vnd.github+json'}
- foreach ($name in @('update.json','dustline-update.zip')) {
-  $asset=@($release.assets | Where-Object name -eq $name)
-  if ($asset.Count -ne 1) { throw "Release missing $name" }
-  $uri=[Uri]$asset[0].browser_download_url
-  if ($uri.Scheme -ne 'https' -or $uri.Host -ne 'github.com' -or !$uri.AbsolutePath.StartsWith("/$Repository/releases/download/",[StringComparison]::OrdinalIgnoreCase)) { throw 'Unexpected release asset URL.' }
-  Invoke-WebRequest -UseBasicParsing -Uri $uri.AbsoluteUri -OutFile (Join-Path $stage $name)
- }
+ # Public Release downloads avoid anonymous REST API rate limits.
+ Invoke-WebRequest -UseBasicParsing -Uri "https://github.com/$Repository/releases/latest/download/update.json" -OutFile (Join-Path $stage 'update.json') -TimeoutSec 60
+ $releaseManifest=Get-Content -LiteralPath (Join-Path $stage 'update.json') -Raw | ConvertFrom-Json
+ if ($releaseManifest.version -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid release version.' }
+ # Pin the ZIP to the manifest version, even if another release appears now.
+ Invoke-WebRequest -UseBasicParsing -Uri "https://github.com/$Repository/releases/download/v$($releaseManifest.version)/dustline-update.zip" -OutFile (Join-Path $stage 'dustline-update.zip') -TimeoutSec 120
 }
 $manifest=Get-Content -LiteralPath (Join-Path $stage 'update.json') -Raw | ConvertFrom-Json
 if ($manifest.schema -ne 1 -or $manifest.runtime -ne $runtime.Trim()) { throw 'Runtime changed. Download the full release once.' }
