@@ -1,0 +1,14 @@
+node_modules/
+.npm-cache/
+.electron-cache/
+dist/
+*.log
+desktop-check/
+electron-runtime.zip
+
+# Machine-specific diagnostics and private research notes
+docs/红警联机对比.md
+desktop/allow-lan.ps1
+desktop/diagnose-connection.ps1
+desktop/诊断联机.cmd
+*.zip

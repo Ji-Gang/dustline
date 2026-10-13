@@ -1,0 +1,17 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>霓虹禁区 · NEON BREACH</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<canvas id="game"></canvas>
+<div id="hud" class="hidden">
+  <header><div class="brand">N<span> / </span>B <small>NEON BREACH</small></div><div class="mission">隔离区 07 <span>● LIVE</span></div></header>
+  <div class="wave"><small>防御协议 / SURVIVAL</small><strong id="wave">WAVE 01</strong><span id="remaining"></span></div>
+  <div id="notice"></div><div id="crosshair"><i></i><b></b></div><div id="hitmarker">×</div>
+  <div class="bottom"><div class="health"><small>生命体征</small><strong><span id="health">100</span><em> / 100</em></strong><div class="bar"><i id="healthbar"></i></div></div><div class="score"><small>击杀 / 积分</small><strong id="score">0 / 00000</strong></div><div class="ammo"><small>AR–07 / 磁轨步枪</small><strong><span id="ammo">30</span><em> / ∞</em></strong><span id="reloadHint">R 换弹</span></div></div>
+  <div class="controls">W A S D 移动 <span>·</span> SHIFT 冲刺 <span>·</span> R 换弹 <span>·</span> ESC 暂停</div>
+</div>
+<div id="menu" class="overlay"><div class="menu-inner"><div class="eyebrow">SECTOR 07 / 封锁行动</div><h1>NEON<br><span>BREACH</span><i>霓虹禁区</i></h1><p>信号已经中断。守住最后一道防线。<br>穿越工业废墟，击退失控的巡逻机群。</p><button id="start">进入禁区 <span>↗</span></button><div class="guide"><div><b>W A S D</b>移动 / SHIFT 冲刺</div><div><b>鼠标</b>瞄准 / 左键射击</div><div><b>R / ESC</b>换弹 / 暂停</div></div><footer>离线单人生存模式 <span>● 系统就绪</span></footer></div><div class="side-label">NEURAL DEFENSE SYSTEM — V.07</div></div>
+<div id="pause" class="overlay hidden"><div class="panel"><div class="eyebrow">CONNECTION SUSPENDED</div><h2>行动已暂停</h2><p>点击继续，重新接管武器。</p><button id="resume">继续行动 ↗</button></div></div>
+<div id="over" class="overlay hidden"><div class="panel"><div class="eyebrow">OPERATION COMPLETE</div><h2>信号已丢失</h2><p id="results"></p><button id="restart">再次部署 ↗</button></div></div>
+<script src="game.js"></script>
+</body></html>

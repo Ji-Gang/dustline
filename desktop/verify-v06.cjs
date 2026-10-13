@@ -1,0 +1,53 @@
+'use strict';
+const {app,BrowserWindow}=require('electron'),fs=require('node:fs'),path=require('node:path'),assert=require('node:assert/strict');
+const {connectRelay,createRelayHost}=require('../pvp/relay.cjs');
+const root=path.resolve(__dirname,'..'),out=path.join(root,'desktop-check','internet-0.6');fs.mkdirSync(out,{recursive:true});
+let win,external,finishing=false;const peers=[],errors=[],rtts=[];const wait=ms=>new Promise(r=>setTimeout(r,ms));
+async function until(fn,label){const deadline=Date.now()+45000;while(!await fn()){if(Date.now()>deadline)throw Error('Timed out '+label);await wait(100);}}
+const timer=setTimeout(()=>finish(Error('Desktop internet check timed out')),180000);
+const js=async code=>{try{return await win.webContents.executeJavaScript(code);}catch(e){throw Error(code.slice(0,110)+': '+e.message);}},view=()=>js('window.__pvp.getState()');
+async function finish(error){if(finishing)return;finishing=true;clearTimeout(timer);if(error){errors.push(String(error.stack||error));try{errors.push(await js("JSON.stringify({error:document.getElementById('error').textContent,ready:!!window.__pvp,ui:window.__pvp?.getState().ui})"));}catch{}}peers.forEach(p=>p.close());if(win&&!win.isDestroyed()){try{await js('window.multiplayer.leave()');}catch{}}await external?.close();fs.writeFileSync(path.join(out,'result.json'),JSON.stringify({ok:!errors.length,errors},null,2));app.exit(errors.length?1:0);}
+app.whenReady().then(async()=>{try{
+ const pkg=path.join(root,'dist','DUSTLINE-Internet-0.6-win32-x64','resources','app');
+ win=new BrowserWindow({width:1440,height:900,show:false,webPreferences:{preload:path.join(pkg,'desktop','preload.cjs'),contextIsolation:true,nodeIntegration:false,sandbox:true,backgroundThrottling:false,offscreen:true}});
+ require(path.join(pkg,'desktop','network.cjs')).setup(win);win.webContents.on('console-message',(_e,d,text)=>{const level=typeof d==='object'?d.level:d,message=typeof d==='object'?d.message:text;if(level==='error'||level===3)errors.push(message);fs.appendFileSync(path.join(out,'console.log'),JSON.stringify({level,message})+'\n');});
+ await win.loadFile(path.join(pkg,'pvp','index.html'),{query:{'desktop-check':'1'}});
+ assert.equal(await js("document.getElementById('transport').value"),'relay');
+ await js("document.getElementById('name').value='DESKTOP HOST';document.getElementById('host').click()");
+ await until(async()=>(await view()).state?.players.length===1,'desktop room');
+ const info=await js("document.getElementById('roomInfo').textContent"),code=info.match(/DL3\.(?:gt|gw|ct|cw)\.[\w-]{22}\.[\w-]{43}/)?.[0];assert(code);
+ await js("document.getElementById('redList').children[1].click()");
+ await until(async()=>{const v=await view();return v.state.players.find(p=>p.id===v.id).team==='red';},'host seat');
+ assert.equal((await view()).state.players[0].slot,1);
+ assert.equal(await js("document.getElementById('start').disabled"),false);
+ await js("document.getElementById('start').click()");
+ await until(async()=>(await view()).ui==='armory','solo start');
+ for(let i=0;i<3;i++)peers.push(await connectRelay({code,name:'CLOUD TEST '+i},m=>{if(m.type==='pong')rtts.push(Date.now()-m.stamp);}));
+ await until(async()=>(await view()).state.players.length===4,'late guests');
+ for(const peer of peers)peer.send({type:'deploy'});
+ await until(async()=>(await view()).state.players.every(p=>p.deployed),'guest deploy');
+ for(const peer of peers)peer.send({type:'ping',stamp:Date.now()});
+ await until(()=>rtts.length>=3,'RTT');
+ await js("document.querySelector('[data-weapon=m4]').click()");
+ await until(async()=>{const v=await view();return v.state.players.find(p=>p.id===v.id).weapon==='m4';},'weapon');
+ await js("window.__pvp.screen('play');document.activeElement.blur();window.dispatchEvent(new KeyboardEvent('keydown',{code:'KeyW',bubbles:true}))");
+ await wait(350);let v=await view();assert(Number.isFinite(v.position.x)&&Number.isFinite(v.position.z));assert(v.position.z>-26);
+ await js("window.dispatchEvent(new KeyboardEvent('keyup',{code:'KeyW',bubbles:true}))");
+ win.webContents.invalidate();await wait(200);fs.writeFileSync(path.join(out,'game.png'),(await win.webContents.capturePage()).toPNG());
+ peers[2].close();await until(async()=>(await view()).state.players.length===3,'guest leaves');assert.equal((await view()).state.phase,'playing');
+ await js('window.multiplayer.leave()');peers.forEach(p=>p.close());
+ // Exercise the actual desktop guest's late-entry lobby, seat and deployment UI.
+ external=await createRelayHost({name:'EXTERNAL HOST',route:code.split('.')[1]});external.client.send({type:'start'});
+ await js("window.__pvp.screen('connect');document.getElementById('relayCode').value="+JSON.stringify(external.code)+";document.getElementById('join').click()");
+ await until(async()=>{const v=await view();return v.state?.host===external.id&&v.state.players.length===2&&v.ui==='lobby';},'late guest lobby');
+ await js("document.getElementById('blueList').children[1].click()");
+ await until(async()=>{const v=await view();return v.state.players.find(p=>p.id===v.id)?.team==='blue';},'guest seat');
+ v=await view();assert.equal(v.state.players.find(p=>p.id===v.id).slot,1);assert(!v.state.players.find(p=>p.id===v.id).alive);
+ await js("document.getElementById('roomInfo').textContent='互联网房间 · 房间码已隐藏'");win.webContents.invalidate();await wait(200);fs.writeFileSync(path.join(out,'seats.png'),(await win.webContents.capturePage()).toPNG());
+ await js("document.getElementById('start').click()");await until(async()=>(await view()).ui==='armory','late guest deploy');
+ v=await view();assert(v.state.players.find(p=>p.id===v.id).protectedUntil>v.state.time);
+ await js("window.__pvp.screen('play');document.activeElement.blur();window.dispatchEvent(new KeyboardEvent('keydown',{code:'KeyW',bubbles:true}))");await wait(600);
+ v=await view();assert(Number.isFinite(v.position.x)&&v.position.z<26);await js("window.dispatchEvent(new KeyboardEvent('keyup',{code:'KeyW',bubbles:true}))");
+ fs.writeFileSync(path.join(out,'runtime.json'),JSON.stringify({desktopHost:true,soloStart:true,players:4,hostSeat:true,guestSeat:true,lateEntry:true,protectedDeployment:true,finitePrediction:true,departureKeepsMatch:true,rttMs:rtts},null,2));
+ await finish();
+}catch(error){await finish(error);}});
