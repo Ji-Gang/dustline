@@ -4,7 +4,7 @@ $ErrorActionPreference='Stop'
 $install=[IO.Path]::GetFullPath($PSScriptRoot)
 $appDir=Join-Path $install 'resources\app'
 if (!(Test-Path -LiteralPath (Join-Path $install 'DUSTLINE.exe'))) { throw 'Run this script from the extracted DUSTLINE folder.' }
-if (Get-Process DUSTLINE -ErrorAction SilentlyContinue) { throw 'Close DUSTLINE before updating. No running game will be stopped.' }
+if (Get-Process DUSTLINE -ErrorAction SilentlyContinue | Where-Object { !$_.Path -or $_.Path -ieq (Join-Path $install 'DUSTLINE.exe') }) { throw 'Close DUSTLINE before updating. No running game will be stopped.' }
 $current=Get-Content -Encoding UTF8 -LiteralPath (Join-Path $appDir 'package.json') -Raw | ConvertFrom-Json
 $runtime=Get-Content -Encoding UTF8 -LiteralPath (Join-Path $install 'runtime-version.txt') -Raw
 $stage=Join-Path $install ('.update-'+[guid]::NewGuid().ToString('N'))
@@ -51,7 +51,7 @@ foreach ($file in $files) {
 }
 $next=Get-Content -Encoding UTF8 -LiteralPath (Join-Path $extract 'package.json') -Raw | ConvertFrom-Json
 if ($next.version -ne $manifest.version -or $next.name -ne 'dustline-desktop' -or $next.main -ne 'desktop/main.cjs') { throw 'Invalid application metadata.' }
-if (Get-Process DUSTLINE -ErrorAction SilentlyContinue) { throw 'Close DUSTLINE and retry.' }
+if (Get-Process DUSTLINE -ErrorAction SilentlyContinue | Where-Object { !$_.Path -or $_.Path -ieq (Join-Path $install 'DUSTLINE.exe') }) { throw 'Close DUSTLINE and retry.' }
 $backup=Join-Path $install ('resources\app-backup-'+[guid]::NewGuid().ToString('N'))
 # All paths derive from this installation; preserve the previous app for recovery.
 Move-Item -LiteralPath $appDir -Destination $backup
