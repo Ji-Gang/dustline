@@ -5,8 +5,8 @@ $install=[IO.Path]::GetFullPath($PSScriptRoot)
 $appDir=Join-Path $install 'resources\app'
 if (!(Test-Path -LiteralPath (Join-Path $install 'DUSTLINE.exe'))) { throw 'Run this script from the extracted DUSTLINE folder.' }
 if (Get-Process DUSTLINE -ErrorAction SilentlyContinue) { throw 'Close DUSTLINE before updating. No running game will be stopped.' }
-$current=Get-Content -LiteralPath (Join-Path $appDir 'package.json') -Raw | ConvertFrom-Json
-$runtime=Get-Content -LiteralPath (Join-Path $install 'runtime-version.txt') -Raw
+$current=Get-Content -Encoding UTF8 -LiteralPath (Join-Path $appDir 'package.json') -Raw | ConvertFrom-Json
+$runtime=Get-Content -Encoding UTF8 -LiteralPath (Join-Path $install 'runtime-version.txt') -Raw
 $stage=Join-Path $install ('.update-'+[guid]::NewGuid().ToString('N'))
 New-Item -ItemType Directory -Path $stage | Out-Null
 if ($PackageDirectory) {
@@ -16,12 +16,12 @@ if ($PackageDirectory) {
  if ($Repository -notmatch '^[A-Za-z0-9_.-]+/[A-Za-z0-9_.-]+$') { throw 'Invalid owner/repository.' }
  # Public Release downloads avoid anonymous REST API rate limits.
  Invoke-WebRequest -UseBasicParsing -Uri "https://github.com/$Repository/releases/latest/download/update.json" -OutFile (Join-Path $stage 'update.json') -TimeoutSec 60
- $releaseManifest=Get-Content -LiteralPath (Join-Path $stage 'update.json') -Raw | ConvertFrom-Json
+ $releaseManifest=Get-Content -Encoding UTF8 -LiteralPath (Join-Path $stage 'update.json') -Raw | ConvertFrom-Json
  if ($releaseManifest.version -notmatch '^\d+\.\d+\.\d+$') { throw 'Invalid release version.' }
  # Pin the ZIP to the manifest version, even if another release appears now.
  Invoke-WebRequest -UseBasicParsing -Uri "https://github.com/$Repository/releases/download/v$($releaseManifest.version)/dustline-update.zip" -OutFile (Join-Path $stage 'dustline-update.zip') -TimeoutSec 120
 }
-$manifest=Get-Content -LiteralPath (Join-Path $stage 'update.json') -Raw | ConvertFrom-Json
+$manifest=Get-Content -Encoding UTF8 -LiteralPath (Join-Path $stage 'update.json') -Raw | ConvertFrom-Json
 if ($manifest.schema -ne 1 -or $manifest.runtime -ne $runtime.Trim()) { throw 'Runtime changed. Download the full release once.' }
 if ([version]$manifest.version -le [version]$current.version) { Write-Host "Already current: $($current.version)"; return }
 $zip=Join-Path $stage 'dustline-update.zip'
@@ -49,7 +49,7 @@ foreach ($file in $files) {
  $expected=$manifest.files.PSObject.Properties[$relative]
  if (!$expected -or (Get-FileHash -LiteralPath $file.FullName -Algorithm SHA256).Hash -ne $expected.Value) { throw "Invalid file: $relative" }
 }
-$next=Get-Content -LiteralPath (Join-Path $extract 'package.json') -Raw | ConvertFrom-Json
+$next=Get-Content -Encoding UTF8 -LiteralPath (Join-Path $extract 'package.json') -Raw | ConvertFrom-Json
 if ($next.version -ne $manifest.version -or $next.name -ne 'dustline-desktop' -or $next.main -ne 'desktop/main.cjs') { throw 'Invalid application metadata.' }
 if (Get-Process DUSTLINE -ErrorAction SilentlyContinue) { throw 'Close DUSTLINE and retry.' }
 $backup=Join-Path $install ('resources\app-backup-'+[guid]::NewGuid().ToString('N'))
