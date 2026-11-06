@@ -21,7 +21,7 @@
  class FireFeedback {
   constructor(){this.reset();}
   reset(){this.key=null;this.pending=[];this.next=0;this.press=0;this.burst=0;this.shots=0;this.reloadUntil=0;}
-  sync(p){const key=p.spawnId+':'+p.weapon;if(this.key!==key){this.reset();this.key=key;this.next=p.fireAt||0;}this.next=Math.max(this.next,p.fireAt||0);if(!p.alive){this.pending=[];this.burst=0;}if(p.reloadUntil)this.reloadUntil=p.reloadUntil;}
+  sync(p){const key=p.spawnId+':'+p.weapon;if(this.key!==key){const press=this.press;this.reset();this.press=press;this.key=key;this.next=p.fireAt||0;}this.next=Math.max(this.next,p.fireAt||0);if(!p.alive){this.pending=[];this.burst=0;}if(p.reloadUntil)this.reloadUntil=p.reloadUntil;}
   confirm(e,now){const i=this.pending.findIndex(s=>s.spawnId===e.spawnId&&s.weapon===e.weapon&&now-s.at<1.5);if(i<0)return false;this.pending.splice(i,1);return true;}
   step(p,w,now,held,press,enabled){
    this.sync(p);this.pending=this.pending.filter(s=>now-s.at<1.5);

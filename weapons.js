@@ -8,8 +8,8 @@ function round(parent,m,x,y,z,w,h,d,r=.004){return mesh(parent,roundedGeometry(w
 function profile(parent,m,points,width){const s=new T.Shape();points.forEach(([z,y],i)=>i?s.lineTo(z,y):s.moveTo(z,y));s.closePath();const g=new T.ExtrudeGeometry(s,{depth:width-.008,steps:1,bevelEnabled:true,bevelThickness:.004,bevelSize:.004,bevelSegments:3});g.rotateY(-Math.PI/2);g.translate(width/2-.004,0,0);return mesh(parent,g,m);}
 function ring(parent,m,x,y,z,r=.022,tube=.003){return mesh(parent,new T.TorusGeometry(r,tube,8,32),m,x,y,z);}
 function materialSetup(){const m=A.mats;if(m.machined)return;const c=document.createElement('canvas');c.width=c.height=256;const g=c.getContext('2d');g.fillStyle='#b5b5b5';g.fillRect(0,0,256,256);for(let i=0;i<900;i++){const v=(i*73)%255;g.strokeStyle=`rgba(${v},${v},${v},0.14)`;g.beginPath();g.moveTo(i*31%256,i*97%256);g.lineTo((i*31%256)+2+i%13,i*97%256);g.stroke();}const tx=new T.CanvasTexture(c);tx.wrapS=tx.wrapT=T.RepeatWrapping;
-  m.machined=new T.MeshStandardMaterial({color:'#465059',roughness:.4,metalness:.82,bumpMap:tx,bumpScale:.0007});
-  m.phosphate=new T.MeshStandardMaterial({color:'#28323a',roughness:.62,metalness:.65,bumpMap:tx,bumpScale:.001});
+  m.machined=new T.MeshStandardMaterial({color:'#58626a',roughness:.43,metalness:.48,bumpMap:tx,bumpScale:.0007});
+  m.phosphate=new T.MeshStandardMaterial({color:'#34414b',roughness:.58,metalness:.4,bumpMap:tx,bumpScale:.001});
   m.polymer=new T.MeshStandardMaterial({color:'#28312e',roughness:.92,bumpMap:tx,bumpScale:.002});
   m.fde=new T.MeshStandardMaterial({color:'#9e8b61',roughness:.76,bumpMap:tx,bumpScale:.001});
   m.lens=new T.MeshStandardMaterial({color:'#256a73',metalness:.78,roughness:.12});
