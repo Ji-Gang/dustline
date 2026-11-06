@@ -9,7 +9,7 @@ else {
   app.on('second-instance',()=>{if(win){if(win.isMinimized())win.restore();win.show();win.focus();}});
   app.whenReady().then(()=>{
     Menu.setApplicationMenu(null);
-    win=new BrowserWindow({title:'DUSTLINE · 联机版 '+version,width:1440,height:900,minWidth:960,minHeight:640,backgroundColor:'#171d20',show:false,autoHideMenuBar:true,webPreferences:{preload:path.join(__dirname,'preload.cjs'),nodeIntegration:false,contextIsolation:true,sandbox:true,backgroundThrottling:false,webSecurity:true,devTools:false}});
+    win=new BrowserWindow({title:'DUSTLINE · 联机版 '+version,width:1440,height:900,minWidth:960,minHeight:640,backgroundColor:'#171d20',show:false,autoHideMenuBar:true,webPreferences:{additionalArguments:['--dustline-version='+version],preload:path.join(__dirname,'preload.cjs'),nodeIntegration:false,contextIsolation:true,sandbox:true,backgroundThrottling:false,webSecurity:true,devTools:false}});
     require('./network.cjs').setup(win);
     win.removeMenu();
     win.webContents.setWindowOpenHandler(()=>({action:'deny'}));

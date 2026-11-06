@@ -16,7 +16,7 @@ class Match {
  enemy(a,b){return a.id!==b.id&&(this.options.mode==='arsenal'||a.team!==b.team);}
  upgrade(p){if(this.options.mode!=='arsenal')return;const tier=Math.min(C.LADDER.length-1,Math.floor(p.kills/C.KILLS_PER_TIER));if(tier<=p.tier)return;const weapon=C.LADDER[tier];p.inventory[weapon]={ammo:C.WEAPONS[weapon].mag,reserve:1,fireAt:0};this.equip(p,weapon);p.inventory={[weapon]:p.inventory[weapon]};p.tier=tier;this.event('upgrade',{player:p.id,weapon,tier});}
  equip(p,weapon){if(p.weapon===weapon)return;const old=p.inventory[p.weapon];if(old)Object.assign(old,{ammo:p.ammo,reserve:p.reserve,fireAt:p.fireAt});const next=p.inventory[weapon];p.weapon=weapon;p.ammo=next.ammo;p.reserve=next.reserve;p.fireAt=Math.max(this.time+.3,next.fireAt||0);p.reloadUntil=0;p.recoil=0;p.shots=0;p.burst=0;p.pendingPress=false;p.triggered=false;p.input={};p.inputQueue=[];}
- start(id){if(id!==this.host||!this.players.size||this.phase==='playing')return false;this.scores={blue:0,red:0};this.winner=null;this.phase='playing';for(const p of this.players.values()){p.kills=p.deaths=0;p.deployed=true;this.spawn(p);}this.event('notice',{text:this.options.mode==='arsenal'?'个人升级战开始：每 2 杀升级，备用弹药无限，率先达到目标击杀数获胜！':'对局开始！未满可随时加入，率先达到目标击杀数的队伍获胜。'});return true;}
+ start(id){if(id!==this.host||!this.players.size||this.phase==='playing')return false;this.scores={blue:0,red:0};this.winner=null;this.phase='playing';for(const p of this.players.values()){p.kills=p.deaths=0;p.deployed=true;this.spawn(p);}this.event('notice',{text:this.options.mode==='arsenal'?'个人升级战':'团队死斗'});return true;}
  command(id,m){const p=this.players.get(id);if(!p||!m||typeof m!=='object')return;
   if(m.type==='input'&&Array.isArray(m.frames)){
    if(m.spawnId!==p.spawnId||!p.alive||!p.deployed||this.phase!=='playing')return;
@@ -40,9 +40,9 @@ class Match {
   }
   if(m.type==='botAdd')this.addBot(id,m.team,m.difficulty);
   if(m.type==='botRemove'&&id===this.host&&this.phase!=='playing'&&this.players.get(m.id)?.bot)this.remove(m.id);
-  if(m.type==='settings'&&id===this.host){if(!this.configure(m.options||{}))this.event('notice',{text:'无法减少人数：请先腾出超出上限的席位。'});}
+  if(m.type==='settings'&&id===this.host){const accepted=this.configure(m.options||{});if(!accepted)this.event('notice',{text:'请先腾出超出人数上限的席位。'});this.event('settings',{player:id,request:Number.isSafeInteger(m.request)?m.request:0,accepted});}
   if(m.type==='lobby'&&id===this.host&&this.phase==='ended')this.phase='lobby';
-  if(m.type==='start')this.start(id);
+  if(m.type==='start'&&id===this.host){if(m.options&&!this.configure(m.options))return;this.start(id);}
   if(m.type==='deploy'&&this.phase==='playing'&&!p.deployed){p.deployed=true;this.spawn(p);}
   if(m.type==='switch'&&this.options.mode!=='arsenal'&&p.alive&&p.deployed&&Number.isInteger(m.slot)&&m.slot>=0&&m.slot<3)this.equip(p,[p.primary,p.secondary,'knife'][m.slot]);
   if(m.type==='weapon'&&this.options.mode!=='arsenal'&&p.alive&&p.canSelect&&this.arena.inSpawn(p)&&Object.hasOwn(C.WEAPONS,m.weapon)&&!C.WEAPONS[m.weapon].melee){const slot=C.WEAPONS[m.weapon].slot===1?'secondary':'primary';if(p[slot]!==m.weapon){const old=p[slot];p[slot]=m.weapon;p.inventory[m.weapon]={ammo:C.WEAPONS[m.weapon].mag,reserve:C.WEAPONS[m.weapon].reserve,fireAt:0};this.equip(p,m.weapon);delete p.inventory[old];}else this.equip(p,m.weapon);}

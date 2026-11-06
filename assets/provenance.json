@@ -1,0 +1,57 @@
+{
+  "license": "CC0-1.0",
+  "files": {
+    "assets/concrete_floor_02/Diffuse.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_floor_02/concrete_floor_02_diff_1k.jpg",
+      "sha256": "6db84a6d87dc50508b9d134d6fbd2b7e876b8081a5f43a118a249ca18de73af5"
+    },
+    "assets/concrete_floor_02/nor_gl.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_floor_02/concrete_floor_02_nor_gl_1k.jpg",
+      "sha256": "fcda391b57a816d646ae15544688be53790478da5cd48dbe514b3c6901415e61"
+    },
+    "assets/concrete_floor_02/Rough.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/concrete_floor_02/concrete_floor_02_rough_1k.jpg",
+      "sha256": "c7f026a611b7859903c61ec7fd4574944157223e9e7796413dd6e2a66eaeac7a"
+    },
+    "assets/rock_boulder_cracked/Diffuse.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_cracked/rock_boulder_cracked_diff_1k.jpg",
+      "sha256": "e88c9e50109c7f610bc380a00b9bdac5954c392bb02134dedeea3358da57276a"
+    },
+    "assets/rock_boulder_cracked/nor_gl.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_cracked/rock_boulder_cracked_nor_gl_1k.jpg",
+      "sha256": "022000a37cb91457de2e0c738baebbc1b0b8eb864ba99321d07c248d5c0741bc"
+    },
+    "assets/rock_boulder_cracked/Rough.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rock_boulder_cracked/rock_boulder_cracked_rough_1k.jpg",
+      "sha256": "47e6c4b43c9cc5331d0392e3f74777f9a6712edda141dd148586b404c6c30e73"
+    },
+    "assets/rusty_metal_02/Diffuse.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rusty_metal_02/rusty_metal_02_diff_1k.jpg",
+      "sha256": "adaf094391518b6afe787a123942110aa88ef521c844f970b124420f5ed5d3d9"
+    },
+    "assets/rusty_metal_02/nor_gl.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rusty_metal_02/rusty_metal_02_nor_gl_1k.jpg",
+      "sha256": "995197a62cac6fbb000e6e6591a3330a3b77ef069c4ac58f505b586b9bdbd97b"
+    },
+    "assets/rusty_metal_02/Rough.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Textures/jpg/1k/rusty_metal_02/rusty_metal_02_rough_1k.jpg",
+      "sha256": "178deb5896232f0498555676e55a3be1d6d197e2211d8d17cb8386a868bfd54a"
+    },
+    "assets/wooden_military_crate/textures/wooden_military_crate_nor_gl_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/wooden_military_crate/wooden_military_crate_nor_gl_2k.jpg",
+      "sha256": "5c687629f2b05b6acdf8b6a022e24e545765ea167cae7d2dff5bbd4b6c383499"
+    },
+    "assets/wooden_military_crate/textures/wooden_military_crate_diff_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/wooden_military_crate/wooden_military_crate_diff_2k.jpg",
+      "sha256": "4ee1f3a07071d2b58296c140f6e1cd0e897bf49a5c909022fe49d481d94b60da"
+    },
+    "assets/wooden_military_crate/textures/wooden_military_crate_arm_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/wooden_military_crate/wooden_military_crate_arm_2k.jpg",
+      "sha256": "e56692c52460d0b29cf9675c5edacca4d1760c27955f01495c961e5786f5b1ea"
+    },
+    "assets/wooden_military_crate/wooden_military_crate.bin": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/wooden_military_crate/wooden_military_crate.bin",
+      "sha256": "cf6fd469a476d834f9724f8b8f762630040d8e785e8697c5d7994ae3e840e727"
+    }
+  }
+}

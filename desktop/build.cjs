@@ -17,6 +17,7 @@ for(const file of files){fs.mkdirSync(path.dirname(path.join(dest,file)),{recurs
 fs.mkdirSync(path.join(dest,'desktop'),{recursive:true});
 for(const name of ['main.cjs','preload.cjs','network.cjs','direct.cjs','network-direct.cjs','network-preload.cjs','network.html'])fs.copyFileSync(path.join(__dirname,name),path.join(dest,'desktop',name));
 fs.cpSync(path.join(root,'pvp'),path.join(dest,'pvp'),{recursive:true,filter:source=>!source.endsWith('test.cjs')});
+fs.cpSync(path.join(root,'assets'),path.join(dest,'assets'),{recursive:true});
 fs.cpSync(path.join(root,'vendor'),path.join(dest,'vendor'),{recursive:true});
 const dependencies=Object.entries(require('../package-lock.json').packages).filter(([key,value])=>key.startsWith('node_modules/')&&!value.dev);
 for(const [dependency] of dependencies){const source=path.join(root,dependency);if(fs.existsSync(source))fs.cpSync(source,path.join(dest,dependency),{recursive:true});}

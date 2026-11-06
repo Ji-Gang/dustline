@@ -1,6 +1,6 @@
 'use strict';
 const {contextBridge,ipcRenderer}=require('electron');
-contextBridge.exposeInMainWorld('multiplayer',Object.freeze({
+contextBridge.exposeInMainWorld('multiplayer',Object.freeze({version:process.argv.find(a=>a.startsWith('--dustline-version='))?.split('=')[1]||'0.15',
  host:options=>ipcRenderer.invoke('pvp:host',options),join:options=>ipcRenderer.invoke('pvp:join',options),leave:()=>ipcRenderer.invoke('pvp:leave'),
  copyCode:code=>ipcRenderer.invoke('pvp:copy',code),
  direct:message=>ipcRenderer.send('pvp:direct',message),onDirect:callback=>{const listener=(_e,m)=>callback(m);ipcRenderer.on('pvp:direct',listener);return()=>ipcRenderer.removeListener('pvp:direct',listener);},
