@@ -6,15 +6,16 @@
   constructor(){this.frames=[];}
   clear(){this.frames.length=0;}
   push(state){if(this.frames.length&&state.time<=this.frames.at(-1).time)return;this.frames.push(state);if(this.frames.length>32)this.frames.shift();}
-  sample(id,time){
+  sample(id,time,arena){
    if(!this.frames.length)return null;
    let before=this.frames[0],after=before;
    for(const frame of this.frames){after=frame;if(frame.time>=time)break;before=frame;}
    const a=before.players.find(p=>p.id===id),b=after.players.find(p=>p.id===id);
-   if(!a||!b||a.spawnId!==b.spawnId||a.alive!==b.alive||a.team!==b.team)return b||a;
+   if(!a||!b||a.spawnId!==b.spawnId||a.alive!==b.alive||a.team!==b.team){const p=b||a;return arena&&p?{...p,...arena.interpolate(p,p,1)}:p;}
    const t=after.time>before.time?Math.max(0,Math.min(1,(time-before.time)/(after.time-before.time))):1;
    const angle=Math.atan2(Math.sin(b.yaw-a.yaw),Math.cos(b.yaw-a.yaw));
-   return {...b,x:a.x+(b.x-a.x)*t,z:a.z+(b.z-a.z)*t,yaw:a.yaw+angle*t,pitch:(a.pitch||0)+((b.pitch||0)-(a.pitch||0))*t};
+   const position=arena?arena.interpolate(a,b,t):{x:a.x+(b.x-a.x)*t,z:a.z+(b.z-a.z)*t};
+   return {...b,...position,yaw:a.yaw+angle*t,pitch:(a.pitch||0)+((b.pitch||0)-(a.pitch||0))*t};
   }
  }
  // Cosmetic only. The host remains the sole authority for ammunition and damage.
