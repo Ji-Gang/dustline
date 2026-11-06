@@ -1,8 +1,8 @@
 {
   "name": "dustline-desktop",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "private": true,
-  "description": "DUSTLINE 2v2 multiplayer team deathmatch",
+  "description": "DUSTLINE multiplayer team deathmatch and free-for-all arsenal",
   "main": "desktop/main.cjs",
   "scripts": {
     "start": "electron .",

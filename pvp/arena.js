@@ -11,9 +11,9 @@ if(id==='foundry'){for(const sign of [-1,1]){
  add(-30,sign*5,8,5,2.3,'container');add(30,sign*5,8,5,2.3,'container');
  add(-7,sign*9,4,4,1.55,'crate');add(7,sign*9,4,4,1.55,'crate');
 }
-add(0,0,9,6,3.5,'machine');add(-24,0,3,3,1.5,'crate');add(24,0,3,3,1.5,'crate');
+add(0,0,1.8,4.8,3.2,'compressor');add(-24,0,3,3,1.5,'crate');add(24,0,3,3,1.5,'crate');
  }else{
- for(const sign of [-1,1]){add(-27,sign*18,17,2,4,'wall');add(26,sign*17,16,3,3.4,'wall');add(-20,sign*5,5,9,4.5,'rock');add(21,sign*7,5,8,3.6,'rock');add(-8,sign*20,4,4,2.35,'crate');add(9,sign*21,5,3,2.35,'crate');add(-32,sign*8,6,4,2.8,'container');add(32,sign*3,5,4,2.35,'crate');}add(0,0,3,3,2.8,'machine');add(-32,0,4,3,2.35,'crate');add(5,0,2,5,2.5,'wall');
+ for(const sign of [-1,1]){add(-27,sign*18,17,2,4,'wall');add(26,sign*17,16,3,3.4,'wall');add(-20,sign*5,5,9,4.5,'rock');add(21,sign*7,5,8,3.6,'rock');add(-8,sign*20,4,4,2.35,'crate');add(9,sign*21,5,3,2.35,'crate');add(-32,sign*8,6,4,2.8,'container');add(32,sign*3,5,4,2.35,'crate');}add(0,0,1.8,4.8,3.2,'compressor');add(-32,0,4,3,2.35,'crate');add(5,0,2,5,2.5,'wall');
  }
 for(const b of boxes){if(b.kind==='crate')b.h=Math.max(2.35,b.h);b.base=groundAt(b.x,b.z);}
 function groundAt(x,z){return id==='quarry'?1.2*Math.max(0,Math.min(1,(12-Math.abs(x))/4,(13-Math.abs(z))/6)):0;}

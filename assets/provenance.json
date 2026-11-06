@@ -52,6 +52,66 @@
     "assets/wooden_military_crate/wooden_military_crate.bin": {
       "source": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/wooden_military_crate/wooden_military_crate.bin",
       "sha256": "cf6fd469a476d834f9724f8b8f762630040d8e785e8697c5d7994ae3e840e727"
+    },
+    "assets/service_pistol/textures/service_pistol_arm_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/service_pistol/service_pistol_arm_2k.jpg",
+      "sha256": "da6d5b10f35c10a43516e503661406513e52289ce9630cf5ce6e738b26214bba"
+    },
+    "assets/service_pistol/textures/service_pistol_nor_gl_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/service_pistol/service_pistol_nor_gl_2k.jpg",
+      "sha256": "118349e76f9d0433eba65e375fdbba5812f850eaa00390f6c7b54f82529dd98b"
+    },
+    "assets/service_pistol/service_pistol.bin": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/4k/service_pistol/service_pistol.bin",
+      "sha256": "a97b6d31ca8865384a76d31289017e25a326a67b3b254162b2a02ecbd97600bc"
+    },
+    "assets/service_pistol/textures/service_pistol_diff_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/service_pistol/service_pistol_diff_2k.jpg",
+      "sha256": "ca680cbbc712ee2c70a337686274eb1e5aae383dbe9b99692c4eedb9e64f6cfb"
+    },
+    "assets/bolt_action_rifle_7_62/textures/bolt_action_rifle_7_62_accesories_nor_gl_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/bolt_action_rifle_7_62/bolt_action_rifle_7_62_accesories_nor_gl_2k.jpg",
+      "sha256": "384c30a68b6d26c06520aca240782e1d1c6a8242c6821eceb1cda3bfdfcced5b"
+    },
+    "assets/bolt_action_rifle_7_62/textures/bolt_action_rifle_7_62_accesories_diff_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/bolt_action_rifle_7_62/bolt_action_rifle_7_62_accesories_diff_2k.jpg",
+      "sha256": "92e851b49dd7352e0a22c6c643f61a8bcb64c92877e4fcdfab26811fa5dbcbd2"
+    },
+    "assets/bolt_action_rifle_7_62/textures/bolt_action_rifle_7_62_accesories_arm_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/bolt_action_rifle_7_62/bolt_action_rifle_7_62_accesories_arm_2k.jpg",
+      "sha256": "39f7a89d3617903948a97bcc7c339b285edbc727c1d265066ed43f85b6658538"
+    },
+    "assets/bolt_action_rifle_7_62/textures/bolt_action_rifle_7_62_nor_gl_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/bolt_action_rifle_7_62/bolt_action_rifle_7_62_nor_gl_2k.jpg",
+      "sha256": "fe3725ff044b4001d322a177c3d5d2738c0bc3a9c1b432bd0febc7cccf8f99d1"
+    },
+    "assets/bolt_action_rifle_7_62/textures/bolt_action_rifle_7_62_diff_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/bolt_action_rifle_7_62/bolt_action_rifle_7_62_diff_2k.jpg",
+      "sha256": "dffc7b47305ca8d0d6e813ca8284d118e78dec4db27f98baee249401da081af3"
+    },
+    "assets/bolt_action_rifle_7_62/textures/bolt_action_rifle_7_62_arm_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/bolt_action_rifle_7_62/bolt_action_rifle_7_62_arm_2k.jpg",
+      "sha256": "8a542b1488d21ed66042b0e632217cd2aa1fda6fa75fd4936467ed1205ee397b"
+    },
+    "assets/bolt_action_rifle_7_62/bolt_action_rifle_7_62.bin": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/bolt_action_rifle_7_62/bolt_action_rifle_7_62.bin",
+      "sha256": "c9a32b6471ef08b6d901f9c1865a31c22d37b254a3f772a3c3348d0fa8203ed0"
+    },
+    "assets/old_military_compressor/textures/old_military_compressor_nor_gl_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/old_military_compressor/old_military_compressor_nor_gl_2k.jpg",
+      "sha256": "98eca39e654335ee611e6b297aa406b237bb73add4f94b90cd9df92365528fc7"
+    },
+    "assets/old_military_compressor/textures/old_military_compressor_diff_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/old_military_compressor/old_military_compressor_diff_2k.jpg",
+      "sha256": "4fd9f1fa31da35a9d48b8a9e97a73d07ec21f9a92278a42cf394f294b070e537"
+    },
+    "assets/old_military_compressor/textures/old_military_compressor_arm_2k.jpg": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/jpg/2k/old_military_compressor/old_military_compressor_arm_2k.jpg",
+      "sha256": "b7ca154f05e75ba5a37f38acdf0f92f2a28de029bf99f7104945892a38c1ffb3"
+    },
+    "assets/old_military_compressor/old_military_compressor.bin": {
+      "source": "https://dl.polyhaven.org/file/ph-assets/Models/gltf/8k/old_military_compressor/old_military_compressor.bin",
+      "sha256": "cb4f99372897713112e468283fa399a4122adf145b8059c8d57b057def4408a3"
     }
   }
 }
