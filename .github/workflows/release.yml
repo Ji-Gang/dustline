@@ -20,6 +20,8 @@ jobs:
       - run: npm ci
       - run: node node_modules/electron/install.js
       - run: npm test
+      - shell: pwsh
+        run: ./desktop/update-test.ps1
       - run: npm run build
       - shell: pwsh
         run: ./desktop/release.ps1
